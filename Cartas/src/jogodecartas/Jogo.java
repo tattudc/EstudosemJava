@@ -23,14 +23,16 @@ public class Jogo {
             jogadores[1] = new Jogador(entrada.next());
     }
     
-    public void inicioJogador(){
-        int escolhaMenu;
-        System.out.println("Bem vindo a trinca, escolha uma das opções abaixo\n");
-        System.out.println("1 - Puxar carta\n2 - Bater\n3 - Passar a vez");
+    public void inicioJogador(int vez){
+        int escolhaMenu, vezJogador = vez;
+        System.out.println("Bem vindo a trinca jogador " + jogadores[vez].getNome() + ", escolha uma das opções abaixo\n");
+        do{
+            System.out.println("1 - Puxar carta\n2 - Bater\n3 - Passar a vez");
         escolhaMenu = entrada.nextInt();
         switch (escolhaMenu) {
             case 1:
-                int escolhaPuxa = 0;
+                 int escolhaPuxa;
+                do{
                 System.out.println("Puxar de...\n1 - Descarte\n2 - Pilha");
                 escolhaPuxa = entrada.nextInt();
                 switch (escolhaPuxa){
@@ -39,22 +41,33 @@ public class Jogo {
                         break;
                     case 2:
                         System.out.println("Puxando da pilha");
+                        jogadores[vez].setCartas(BARALHO.distribuirCartas(1));
                         break;
                     default:
                         System.out.println("Opção inválida");
+                        System.out.println("Opção inválida!\nEscolha entre 1 ou 2");
                         break;
                 }
+                }while(escolhaPuxa < 1 || escolhaPuxa > 2);
                 break;
             case 2:
                 System.out.println("Conferindo...");
                 break;
             case 3:
                 System.out.println("Passando a vez...");
-                inicioJogador();
+                if(vezJogador == 0){
+                    inicioJogador(1);
+                }
+                else{
+                    inicioJogador(0);
+                }
                 break;
             default:
-                System.out.println("Opção inválida!");
+                System.out.println("Opção inválida!\nEscolha uma opção de 1 a 3");
+                break;
         }
+        }while(escolhaMenu < 1 || escolhaMenu > 3);
+        
     }
 
     public void distribuirCartas(int qtdCartas) {
@@ -73,7 +86,7 @@ public class Jogo {
         Jogo executar = new Jogo();
         executar.criarJogadores();
         executar.distribuirCartas(9);
-        executar.inicioJogador();
+        executar.inicioJogador(0);
         executar.mostrarCartas();
     }
 }

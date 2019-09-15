@@ -8,6 +8,10 @@ public class Jogador {
     public Jogador(String nome) {
         this.NOME = nome;
     }
+    
+    public String getNome(){
+        return NOME;
+    }
 
     public void setCartas(Carta[] cartas) {
         this.cartas = cartas;
