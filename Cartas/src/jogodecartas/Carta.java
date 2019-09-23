@@ -1,5 +1,10 @@
 package jogodecartas;
 
+/**
+ *
+ * @author Laura(modificações Tarcisio e Clara)
+ */
+
 public class Carta {
 
     private final String FACE;
@@ -9,7 +14,14 @@ public class Carta {
         this.FACE = face;
         this.NAIPE = naipe;
     }
+    
+    public String getFace(){
+        return FACE;
+    }
 
+    public String getNaipe(){
+        return NAIPE;
+    }
     @Override
     public String toString() {
         return FACE + " de " + NAIPE;

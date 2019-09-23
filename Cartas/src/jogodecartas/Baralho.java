@@ -1,23 +1,27 @@
 package jogodecartas;
 
+/**
+ *
+ * @author Laura(modificações Tarcisio e Clara)
+ */
 import java.util.Random;
 
 public class Baralho {
 
-    private final Carta[] CARTAS;
+    private static Carta[] cartas; //Mudar de final para static para melhor acessar
     private final Random ALEATORIO;
-    private int contador;
+    private static int contador;
 
     public Baralho() {
         ALEATORIO = new Random(); //Gerar o numero aleatório
-        CARTAS = new Carta[52]; //Gerar 52 cartas
+        cartas = new Carta[52]; //Gerar 52 cartas
         String[] face = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         String[] naipe = {"copas", "espadas", "ouros", "paus"};
 
         int cont = 0; //inicialização das cartas
-        for (int i = 0; i < naipe.length; i++) {
-            for (int j = 0; j < face.length; j++) {
-                CARTAS[cont++] = new Carta(face[j], naipe[i]);
+        for (String naipe1 : naipe) { //Mudei para for aprimorado
+            for (String face1 : face) {
+                cartas[cont++] = new Carta(face1, naipe1);
             }
         }
     }
@@ -26,12 +30,12 @@ public class Baralho {
         System.out.println("\t\tEMBARALHANDO\n");
         int num, num2;
         Carta temp;
-        for (int i = 0; i < CARTAS.length; i++) { //Embaralha e mistura 2 cartas
-            num = ALEATORIO.nextInt(CARTAS.length); //Até embaralhar 52 vezes
-            num2 = ALEATORIO.nextInt(CARTAS.length);
-            temp = CARTAS[num];
-            CARTAS[num] = CARTAS[num2];
-            CARTAS[num2] = temp;
+        for (Carta carta : cartas) {             //Embaralha e mistura 2 cartas
+            num = ALEATORIO.nextInt(cartas.length); //Até embaralhar 52 vezes
+            num2 = ALEATORIO.nextInt(cartas.length);
+            temp = cartas[num];
+            cartas[num] = cartas[num2];
+            cartas[num2] = temp;
         }
     }
 
@@ -41,16 +45,26 @@ public class Baralho {
         Carta[] cartasJogador = new Carta[qtdCartas];
 
         for (int i = 0; i < qtdCartas; i++) {
-            cartasJogador[i] = CARTAS[contador];
+            cartasJogador[i] = cartas[contador];
             contador++;
         }
 
         return cartasJogador;
     }
-
+    
+    //Agora sim criando metodo de pegar carta do baralho restante
+    public Carta[] getCarta(){ 
+        return cartas;
+    }
+    //Metodo para puxar da pilha
+    public static Carta puxarPilha(){
+        System.out.println("Puxou: "+ cartas[++contador]);
+        return cartas[contador];
+    }
+    
     public void mostrarBaralho() {
         System.out.println("------------APRESENTANDO BARALHO-----------------");
-        for (Carta carta : CARTAS) {
+        for (Carta carta : cartas) {
             System.out.println(carta.toString());
         }
     }

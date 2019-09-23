@@ -2,11 +2,17 @@ package jogodecartas;
 
 import java.util.Scanner;
 
+/**
+ *
+ * @author Laura(modificações Tarcisio e Clara)
+ */
+
 public class Jogo {
 
     private final Scanner entrada = new Scanner(System.in);
     private final Baralho BARALHO;
     private Jogador[] jogadores;
+    //private descarte[]; //ajeitar lista
 
     public Jogo() {
         BARALHO = new Baralho();
@@ -23,6 +29,76 @@ public class Jogo {
             jogadores[1] = new Jogador(entrada.next());
     }
     
+    public void passarVez(int vez){
+        System.out.println("Passando a vez...");
+        if(vez == 0){
+            inicioJogador(1);
+            }
+        else{
+            inicioJogador(0);
+            }
+    }
+    
+    public void puxandoDescarte(int vez, int escolhaMenu){
+        System.out.println("Puxando do descarte");
+        if ("Vazio".equals(Descarte.cartaDescarte.getNaipe())) {
+            System.out.println("Nada foi descartado, por favor puxe da pilha");
+            puxandoPilha(vez, escolhaMenu);
+            } 
+        else {
+            jogadores[vez].puxarDescarte();
+            int descart;
+            do{
+                System.out.println("Agora escolha uma carta para descartar de 1 a 10");
+                jogadores[vez].mostrarCartas();
+                descart = entrada.nextInt();
+                if(descart <= 10){
+                    Descarte.cartaDescarte = jogadores[vez].descartMao(descart - 1);
+                    jogadores[vez].descartar(descart -1);
+                }
+                else{
+                    System.out.println("Escolha de 1 a 10 para selecionar a carta");
+                }
+            }while(descart < 1 || descart > 10);
+            jogadores[vez].mostrarCartas();
+            System.out.println("Agora quer bater ou passar a vez?\n1 - Bater\n2 ou + - Passar a vez");
+            escolhaMenu = entrada.nextInt();
+            if(escolhaMenu == 1){
+                System.out.println("Conferindo");
+                }
+            else{
+                passarVez(vez);
+               }
+            }
+    }
+    
+    public void puxandoPilha(int vez, int escolhaMenu){
+        System.out.println("Puxando da pilha");
+                        jogadores[vez].puxarPilha();
+                        int descart;
+                        do{
+                            System.out.println("Agora escolha uma carta para descartar de 1 a 10");
+                            jogadores[vez].mostrarCartas();
+                            descart = entrada.nextInt();
+                            if(descart <= 10){
+                                Descarte.cartaDescarte = jogadores[vez].descartMao(descart - 1);
+                                jogadores[vez].descartar(descart -1);
+                            }
+                            else{
+                                System.out.println("Escolha de 1 a 10 para selecionar a carta");
+                            }
+                        }while(descart < 1 || descart > 10);
+                        jogadores[vez].mostrarCartas();
+                        System.out.println("Agora quer bater ou passar a vez?\n1 - Bater\n2 ou + - Passar a vez");
+                        escolhaMenu = entrada.nextInt();
+                        if(escolhaMenu == 1){
+                            System.out.println("Conferindo");
+                        }
+                        else{
+                            passarVez(vez);
+                        }
+    }
+    
     public void inicioJogador(int vez){
         int escolhaMenu, vezJogador = vez;
         System.out.println("Bem vindo a trinca jogador " + jogadores[vez].getNome() + ", escolha uma das opções abaixo\n");
@@ -37,14 +113,12 @@ public class Jogo {
                 escolhaPuxa = entrada.nextInt();
                 switch (escolhaPuxa){
                     case 1:
-                        System.out.println("Puxando do descarte");
+                        puxandoDescarte(vez, escolhaMenu);
                         break;
                     case 2:
-                        System.out.println("Puxando da pilha");
-                        jogadores[vez].setCartas(BARALHO.distribuirCartas(1));
+                        puxandoPilha(vez, escolhaMenu);
                         break;
                     default:
-                        System.out.println("Opção inválida");
                         System.out.println("Opção inválida!\nEscolha entre 1 ou 2");
                         break;
                 }
@@ -54,13 +128,7 @@ public class Jogo {
                 System.out.println("Conferindo...");
                 break;
             case 3:
-                System.out.println("Passando a vez...");
-                if(vezJogador == 0){
-                    inicioJogador(1);
-                }
-                else{
-                    inicioJogador(0);
-                }
+                passarVez(vezJogador);
                 break;
             default:
                 System.out.println("Opção inválida!\nEscolha uma opção de 1 a 3");
@@ -87,7 +155,6 @@ public class Jogo {
         executar.criarJogadores();
         executar.distribuirCartas(9);
         executar.inicioJogador(0);
-        executar.mostrarCartas();
     }
 }
 
