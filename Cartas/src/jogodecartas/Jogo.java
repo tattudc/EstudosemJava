@@ -1,6 +1,9 @@
 package jogodecartas;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  *
@@ -11,11 +14,13 @@ public class Jogo {
 
     private final Scanner entrada = new Scanner(System.in);
     private final Baralho BARALHO;
+    private Baralho baralho2;
     private Jogador[] jogadores;
     //private descarte[]; //ajeitar lista
 
     public Jogo() {
         BARALHO = new Baralho();
+        baralho2 = new Baralho();
         BARALHO.mostrarBaralho();
         BARALHO.embaralhar();
         BARALHO.mostrarBaralho();
@@ -126,6 +131,8 @@ public class Jogo {
                 break;
             case 2:
                 System.out.println("Conferindo...");
+                bater(jogadores[vezJogador].getCarta());
+                
                 break;
             case 3:
                 passarVez(vezJogador);
@@ -135,6 +142,36 @@ public class Jogo {
                 break;
         }
         }while(escolhaMenu < 1 || escolhaMenu > 3);
+        
+    }
+    
+    public void bater(ArrayList<Carta> o){
+        String[] maoJogador = new String[o.size()];
+               
+        for(int i = 0; i < maoJogador.length; i++){
+            maoJogador[i] = o.get(i).getFace();
+        }
+        
+        
+        int cont = 0, vit = 0;
+        Carta carta1 = new Carta("Sem face", "Sem naipe");
+        Carta carta2 = new Carta("Sem face", "Sem naipe");
+        for (int i = 0; i < o.size(); i++) {
+            for(int j = 0; j < o.size(); j++){
+                if (maoJogador[i].contains(o.get(j).getFace())){
+                    cont++;
+                    carta1 = o.get(i);
+                    carta2 = o.get(j);
+                }
+                if(cont >= 3){
+                    vit += 1;
+                    }
+                o.remove(o.indexOf(o))
+                }
+            cont = 0;
+        }
+        System.out.println(cont);
+        System.out.println(vit);
         
     }
 
