@@ -187,7 +187,7 @@ public class Jogo {
                     aux1 = Integer.decode(o.get(car1 -1).getFace());
                     aux2 = Integer.decode(o.get(car2 -1).getFace());
                     aux3 = Integer.decode(o.get(car3 -1).getFace());
-                    if(!(o.get(car1).getNaipe().contains(o.get(car2).getNaipe()) && o.get(car1).getNaipe().contains(o.get(car3).getNaipe()) && o.get(car2).getNaipe().contains(o.get(car3).getNaipe()))){
+                    if(o.get(car1 -1).getNaipe().contains(o.get(car2 -1).getNaipe()) && o.get(car1 -1).getNaipe().contains(o.get(car3 -1).getNaipe()) && o.get(car2 -1).getNaipe().contains(o.get(car3 -1).getNaipe())){
                         if((aux1 == aux2+1 && aux1 == aux3-1) || (aux1 == aux3+1 && aux1 == aux2-1)){
                             System.out.println("Forma sequencia!");
                             vit +=1;
