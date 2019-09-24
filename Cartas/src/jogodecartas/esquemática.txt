@@ -1,17 +1,19 @@
 Jogo cartas
 - Seleciona jogadores permitindo somente 2
-- Criar função pra chamar menu
+- Criar funÃ§Ã£o pra chamar menu
 - No menu inicialmente pode pedir para bater ou puxar a carta
-- Ao pedir pra puxar a carta é perguntado se puxa do descarte
+- Ao pedir pra puxar a carta Ã© perguntado se puxa do descarte
 ou do baralho.
 - Jogo confere se tem mais de 9 cartas e exige descarte
-- Ao descartar mostra duas opções: Bater ou passar vez
-- Se escolher bater jogo confere a mão, havendo 3 iguais de
-naipes diferentes ou sequencia de naipes iguais o jogo é vencido
-se não houver o jogo se da como perdido para esse jogador
+- Ao descartar mostra duas opÃ§Ãµes: Bater ou passar vez
+- Se escolher bater jogo confere a mÃ£o, havendo 3 iguais de
+naipes diferentes ou sequencia de naipes iguais o jogo Ã© vencido
+se nÃ£o houver o jogo se da como perdido para esse jogador
 - Se escolher passar a vez o jogador 2 assume a jogada e
 repete o processo a partir da segunda linha.
 
 **Mudar ou criar**
-- Mudar função de criar jogadores deixando apenas 2
+- Mudar funÃ§Ã£o de criar jogadores deixando apenas 2
 - Criar inicio do jogo
+
+metÃ³do bater trocar os elses por continue
