@@ -2,8 +2,6 @@ package jogodecartas;
 
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  *
@@ -14,13 +12,11 @@ public class Jogo {
 
     private final Scanner entrada = new Scanner(System.in);
     private final Baralho BARALHO;
-    private Baralho baralho2;
     private Jogador[] jogadores;
-    //private descarte[]; //ajeitar lista
+    public int vit = 0;
 
     public Jogo() {
         BARALHO = new Baralho();
-        baralho2 = new Baralho();
         BARALHO.mostrarBaralho();
         BARALHO.embaralhar();
         BARALHO.mostrarBaralho();
@@ -70,6 +66,7 @@ public class Jogo {
             escolhaMenu = entrada.nextInt();
             if(escolhaMenu == 1){
                 System.out.println("Conferindo");
+                bater(jogadores[vez].getCarta(), vez);
                 }
             else{
                 passarVez(vez);
@@ -98,6 +95,7 @@ public class Jogo {
                         escolhaMenu = entrada.nextInt();
                         if(escolhaMenu == 1){
                             System.out.println("Conferindo");
+                            bater(jogadores[vez].getCarta(), vez);
                         }
                         else{
                             passarVez(vez);
@@ -131,8 +129,7 @@ public class Jogo {
                 break;
             case 2:
                 System.out.println("Conferindo...");
-                bater(jogadores[vezJogador].getCarta());
-                
+                bater(jogadores[vezJogador].getCarta(), vezJogador);
                 break;
             case 3:
                 passarVez(vezJogador);
@@ -141,38 +138,115 @@ public class Jogo {
                 System.out.println("Opção inválida!\nEscolha uma opção de 1 a 3");
                 break;
         }
-        }while(escolhaMenu < 1 || escolhaMenu > 3);
-        
+        }while(escolhaMenu < 1 || escolhaMenu > 3);  
     }
     
-    public void bater(ArrayList<Carta> o){
-        String[] maoJogador = new String[o.size()];
-               
-        for(int i = 0; i < maoJogador.length; i++){
-            maoJogador[i] = o.get(i).getFace();
-        }
-        
-        
-        int cont = 0, vit = 0;
-        Carta carta1 = new Carta("Sem face", "Sem naipe");
-        Carta carta2 = new Carta("Sem face", "Sem naipe");
-        for (int i = 0; i < o.size(); i++) {
-            for(int j = 0; j < o.size(); j++){
-                if (maoJogador[i].contains(o.get(j).getFace())){
-                    cont++;
-                    carta1 = o.get(i);
-                    carta2 = o.get(j);
-                }
-                if(cont >= 3){
-                    vit += 1;
+    public void bater(ArrayList<Carta> o, int vez){
+        int escolhaBater;
+        do{
+            int car1, car2,car3;
+            int aux1, aux2, aux3;
+            System.out.println("Digite: 1 - Trinca, 2 - Sequencia, 3 - Cancelar\n");
+            escolhaBater = entrada.nextInt();
+            switch(escolhaBater){
+                case 1: //Pede pro usuário escolher 3 cartas para baixar e formar trinca
+                    System.out.println("Escolha 3 cartas da sua mão para formar o jogo de trinca");
+                    System.out.println("Para selecionar digite de 1 a 9");
+                    jogadores[vez].mostrarCartas();
+                    car1 = entrada.nextInt();
+                    car2 = entrada.nextInt();
+                    car3 = entrada.nextInt();
+                    aux1 = Integer.decode(o.get(car1 -1).getFace());
+                    aux2 = Integer.decode(o.get(car2 -1).getFace());
+                    aux3 = Integer.decode(o.get(car3 -1).getFace());
+                    if(aux1 == aux2 && aux1 == aux3 && aux2 == aux3){
+                        System.out.println("Forma trinca!");
+                        vit +=1;
+                        o.remove(car1 -1);
+                        o.remove(car1 -1);
+                        o.remove(car1 -1);
+                        if(vit == 3){
+                            System.out.println("Vitória "+ jogadores[vez].getNome() + "!!!");
+                        }
+                        else{
+                            bater(jogadores[vez].getCarta(), vez);
+                        }
                     }
-                o.remove(o.indexOf(o))
-                }
-            cont = 0;
-        }
-        System.out.println(cont);
-        System.out.println(vit);
-        
+                    else{
+                        System.out.println("Não forma trinca!");
+                        bater(jogadores[vez].getCarta(), vez);
+                        }
+                    break;
+                case 2: //Pede pro usuário baixar 3 cartas formando sequencia
+                    System.out.println("Escolha 3 cartas da sua mão para formar o jogo de sequencia");
+                    System.out.println("Para selecionar digite de 1 a 9");
+                    jogadores[vez].mostrarCartas();
+                    car1 = entrada.nextInt();
+                    car2 = entrada.nextInt();
+                    car3 = entrada.nextInt();
+                    aux1 = Integer.decode(o.get(car1 -1).getFace());
+                    aux2 = Integer.decode(o.get(car2 -1).getFace());
+                    aux3 = Integer.decode(o.get(car3 -1).getFace());
+                    if(!(o.get(car1).getNaipe().contains(o.get(car2).getNaipe()) && o.get(car1).getNaipe().contains(o.get(car3).getNaipe()) && o.get(car2).getNaipe().contains(o.get(car3).getNaipe()))){
+                        if((aux1 == aux2+1 && aux1 == aux3-1) || (aux1 == aux3+1 && aux1 == aux2-1)){
+                            System.out.println("Forma sequencia!");
+                            vit +=1;
+                            o.remove(car1 -1);
+                            o.remove(car1 -1);
+                            o.remove(car1 -1);
+                            if(vit == 3){
+                            System.out.println("Vitória "+ jogadores[vez].getNome() + "!!!");
+                            }
+                            else{
+                                bater(jogadores[vez].getCarta(), vez);
+                            }
+                        }
+                        else if((aux2 == aux1+1 && aux2 == aux3-1) || (aux2 == aux3+1 && aux2 == aux1-1)){
+                            System.out.println("Forma sequencia!");
+                            vit +=1;
+                            o.remove(car1 -1);
+                            o.remove(car1 -1);
+                            o.remove(car1 -1);
+                            if(vit == 3){
+                            System.out.println("Vitória "+ jogadores[vez].getNome() + "!!!");
+                            }
+                            else{
+                                bater(jogadores[vez].getCarta(), vez);
+                            }
+                        }
+                        else if((aux3 == aux1+1 && aux3 == aux2-1) ||(aux3 == aux2+1 && aux3 == aux1-1)){
+                            System.out.println("Forma sequencia!");
+                            vit +=1;
+                            o.remove(car1 -1);
+                            o.remove(car1 -1);
+                            o.remove(car1 -1);
+                            if(vit == 3){
+                            System.out.println("Vitória "+ jogadores[vez].getNome() + "!!!");
+                            }
+                            else{
+                                bater(jogadores[vez].getCarta(), vez);
+                            }
+                        }
+                        else{
+                            System.out.println("Não forma sequencia!");
+                            bater(jogadores[vez].getCarta(), vez);
+                        }
+                    }
+                    else{
+                            System.out.println("Naipes iguais!");
+                            bater(jogadores[vez].getCarta(), vez);
+                        }
+                    break;
+                case 3:
+                    System.out.println("Perdeu a vez!");
+                    vit = 0;
+                    passarVez(vez);
+                    break;
+                default:
+                    System.out.println("Escolha inválida!");
+                    break;
+            }
+        }while(escolhaBater < 1 || escolhaBater > 3);
     }
 
     public void distribuirCartas(int qtdCartas) {
@@ -194,13 +268,3 @@ public class Jogo {
         executar.inicioJogador(0);
     }
 }
-
-//Comentários
-//Jogador1
-//Comparar jogos
-//puxar(Do descarte ou pilha - função mostrar cartas)
-//Descartar(Se tiver +9 obrigar descarte)
-//Comparar jogos(Se tiver 3 jogos, ganhou senão passa vez)
-//Jogador2
-//Repete procedimento
-//Criar metodo na classe jogo para iniciar jogo

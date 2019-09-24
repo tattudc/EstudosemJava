@@ -15,7 +15,7 @@ public class Baralho {
     public Baralho() {
         ALEATORIO = new Random(); //Gerar o numero aleatório
         cartas = new Carta[52]; //Gerar 52 cartas
-        String[] face = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+        String[] face = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"};
         String[] naipe = {"copas", "espadas", "ouros", "paus"};
 
         int cont = 0; //inicialização das cartas
