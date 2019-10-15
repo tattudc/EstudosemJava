@@ -47,7 +47,7 @@ public class Loja {
                     System.out.println("Numero inválido!");
                     break;
             }
-        }while(menuIni < 1 || menuIni > 6);
+        }while(menuIni != 6);
         
     }
     
@@ -70,7 +70,6 @@ public class Loja {
                     codigo = entrada.next();
                     pessoas.add(new Cliente(nome, cpf, codigo));
                     System.out.println("Cliente cadastrado com sucesso!!!");
-                    menu();
                     break;
                 case 2:
                     System.out.println("Digite o nome do funcionário: ");
@@ -85,7 +84,6 @@ public class Loja {
                     horas = entrada.nextDouble();
                     pessoas.add(new Administrativo(nome, cpf, matricula, salario, horas));
                     System.out.println("Funcionário cadastrado com sucesso!!!");
-                    menu();
                     break;
                 case 3:
                     System.out.println("Digite o nome do vendedor: ");
@@ -100,16 +98,14 @@ public class Loja {
                     vendas = entrada.nextDouble();
                     pessoas.add(new Vendedor(nome, cpf, matricula, salario, vendas));
                     System.out.println("Vendedor cadastrado com sucesso!!!");
-                    menu();
                     break;
                 case 4:
-                    menu();
                     break;
                 default:
                     System.out.println("Número inválido!");
                     break;
             }
-        }while(menuCad < 1 || menuCad > 4);
+        }while(menuCad != 4);
     }
     
     private void remover(){
@@ -117,10 +113,8 @@ public class Loja {
         cpf = entrada.next();
         if(buscar(cpf) != null){
             pessoas.remove(buscar(cpf));
-            menu();
         }else{
             System.out.println("Número incorreto ou pessoa inexistente");
-            menu();
         }
     }
     
@@ -152,24 +146,21 @@ public class Loja {
     private void adicionarProdutividade(){
         System.out.print("Informe o cpf: ");
         cpf = entrada.next();
-        if(buscar(cpf) != null){
-            if(buscar(cpf) instanceof Administrativo){
+        Pessoa p = buscar(cpf);
+        if(p != null){
+            if(p instanceof Administrativo){
                 System.out.print("Digite as horas extras a mais: ");
                 double produtividade = entrada.nextDouble();
-                ((Administrativo) buscar(cpf)).setHoras(produtividade);
-                menu();
-            }else if(buscar(cpf) instanceof Vendedor){
+                ((Administrativo) p).setHoras(produtividade);
+            }else if(p instanceof Vendedor){
                 System.out.print("Digite as vendas do vendedor: ");
                 double produtividade = entrada.nextDouble();
-                ((Vendedor) buscar(cpf)).setVendas(produtividade);
-                menu();
+                ((Vendedor) p).setVendas(produtividade);
             }else{
                 System.out.println("Um cliente não pode usar essa função");
-                menu();
             }
         }else{
             System.out.println("CPF inválido!!!");
-            adicionarProdutividade();
         }
     }
     
@@ -183,10 +174,8 @@ public class Loja {
                 System.out.println(((Vendedor) pessoas.get(i)).toString());
             }else{
                 System.out.println("Clientes não geram folha de pagamento!");
-                menu();
             }
         }
-        menu();
     }
     
     public static void main(String[] args) {

@@ -34,6 +34,6 @@ public abstract class Funcionario extends Pessoa {
 
     @Override
     public String toString() {
-        return "Funcionario{" + "matricula=" + matricula + ", salario=" + salario + '}';
+        return "Funcionario{Nome: "+ getNome() + " matricula= " + matricula + ", salario= " + calculaPagamento() + '}';
     }
 }

@@ -17,13 +17,13 @@ public class Vendedor extends Funcionario {
     }
 
     public void setVendas(double vendas) {
-        this.vendas = vendas;
+        this.vendas += vendas;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Vendedor{" + "vendas=" + vendas + '}';
-    }
+    }*/
 
     @Override
     public double calculaPagamento() {

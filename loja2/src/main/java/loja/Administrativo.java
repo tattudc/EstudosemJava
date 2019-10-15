@@ -17,7 +17,7 @@ public class Administrativo extends Funcionario {
     }
 
     public void setHoras(double horas) {
-        this.horas = horas;
+        this.horas += horas;
     }
 
     @Override

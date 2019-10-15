@@ -32,12 +32,11 @@ public class Imobiliaria {
                     System.out.println("Número inválido");
                     break;
             }
-        }while(opMenu < 1 || opMenu > 4);
+        }while(opMenu != 3);
     }
     
     private boolean listarImoveis(){
         if(imoveis.isEmpty()){
-            System.out.println("Nada cadastrado!");
             return false;
         }else{
             for(Imovel i: imoveis){
@@ -50,21 +49,24 @@ public class Imobiliaria {
     private void alugarImoveis(){
         int codImovel;
         listarImoveis();
-        System.out.println("Digite o código do imóvel: ");
-        codImovel = entrada.nextInt();
-        for(int i = 0; i < imoveis.size(); i++){
-            if(imoveis.get(i).getCodigo() == codImovel){
-                if(imoveis.get(i).isDisponivel()){
-                    imoveis.get(i).setDisponivel(false);
-                    System.out.println("Imóvel alugado com sucesso!");
-                    menu();
-                    break;
-                }
-                else{
-                    System.out.println("Imóvel indisponível");
-                    menu();
+        if(listarImoveis() == true){
+            System.out.println("Digite o código do imóvel: ");
+            codImovel = entrada.nextInt();
+            for(int i = 0; i < imoveis.size(); i++){
+                if(imoveis.get(i).getCodigo() == codImovel){
+                    if(imoveis.get(i).isDisponivel()){
+                        imoveis.get(i).setDisponivel(false);
+                        System.out.println("Imóvel alugado com sucesso!");
+                        break;
+                    }
+                    else{
+                        System.out.println("Imóvel indisponível");
+                    }
                 }
             }
+        }
+        else{
+            System.out.println("Nada cadastrado!");
         }
     }
     
@@ -76,6 +78,7 @@ public class Imobiliaria {
             System.out.println("------Cadastrar Imóvel------");
             System.out.println("1 - Residencial");
             System.out.println("2 - Comercial");
+            System.out.println("3 - Voltar");
             opMenuCadastro = entrada.nextInt();
             switch(opMenuCadastro){
                 case 1:
@@ -89,7 +92,6 @@ public class Imobiliaria {
                     imoveis.add(res1);
                     System.out.println("Cadastrado!");
                     contador++;
-                    menu();
                     break;
                 case 2:
                     System.out.println("Digite a regiao do imovel:");
@@ -102,13 +104,14 @@ public class Imobiliaria {
                     imoveis.add(com1);
                     System.out.println("Cadastrado!");
                     contador++;
-                    menu();
+                    break;
+                case 3:
                     break;
                 default:
                     System.out.println("Numero Invalido");
                     break;
             }
-        }while(opMenuCadastro < 1 || opMenuCadastro > 2);
+        }while(opMenuCadastro != 3);
     }
     public static void main(String[] args) {
         Imobiliaria imo = new Imobiliaria();
