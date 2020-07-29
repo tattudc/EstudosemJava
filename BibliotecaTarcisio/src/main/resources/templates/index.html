@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Livros</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid">
+    <h1 class="text-center text-sucess">
+        <span><img th:src="@{https://static.vecteezy.com/system/resources/previews/000/297/034/non_2x/vector-a-blank-open-book.jpg}" height="50px" width="50px"></span>
+        Biblioteca do Tarcísio
+        <span><img th:src="@{https://static.vecteezy.com/system/resources/previews/000/297/034/non_2x/vector-a-blank-open-book.jpg}" height="50px" width="50px"></span>
+    </h1>
+    <a href="/cadastrar" class="btn btn-primary ml-2">Cadastrar Livros</a>
+    <span class="float-right">Último Login (Data|Hora): <span th:text="${cookie}" class="text-success"></span> </span>
+        <table class="table table-hover"><!-- Início Tabela -->
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Imagem</th>
+                    <th>Título</th>
+                    <th>Categoria</th>
+                    <th>Descrição</th>
+                    <th>Editora</th>
+                    <th>Lançamento</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="livros : ${livrosList}" th:object="${livros}">
+                    <td th:text="*{id}">ID</td>
+                    <td><img th:src="*{urlImage}" height="120px" width="100px"></td>
+                    <td th:text="*{titulo}">ID</td>
+                    <td th:text="*{categoria}">ID</td>
+                    <td th:text="*{descricao}">ID</td>
+                    <td th:text="*{editora}">ID</td>
+                    <td th:text="*{anoLancamento}">ID</td>
+                    <td class="d-flex justify-content-between">
+                        <a th:href="@{'/editar/' + ${livros.id}}" class="btn btn-primary">Editar</a> &nbsp;
+                        <a th:href="@{'/deletar/' + ${livros.id}}" class="btn btn-danger">Deletar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
